@@ -1,0 +1,109 @@
+<button mat-mini-fab [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+
+<mat-menu #menu="matMenu">
+  <div class="input-row" (click)="$event.stopPropagation()">
+    <input matInput [(ngModel)]="count" class="input" placeholder="Quantity" />
+    <button mat-stroked-button color="accent" (click)="autoFill()">Put candles</button>
+  </div>
+
+  <button mat-flat-button color="accent" class="light-button" (click)="light()">Light the candles 🕯️</button>
+</mat-menu>
+
+<button mat-fab extended color="accent" class="ready-button" [disabled]="stream" (click)="mic()">
+  READY! 🎂
+</button>
+
+<div class="cake">
+  <div class="plate"></div>
+  <div class="layer layer-bottom"></div>
+  <div class="layer layer-middle"></div>
+  <div class="layer layer-top"></div>
+  <div class="icing" (click)="icingClick($event)">
+    <app-candle *ngFor="let candle of candles; let index = index"
+                [candle]="candle"
+                [coords]="{x: candle.x, y: candle.y}"
+                [index]="index"
+    ></app-candle>
+  </div>
+  <div class="drip drip1"></div>
+  <div class="drip drip2"></div>
+  <div class="drip drip3"></div>
+</div>
+
+<app-fairworks *ngIf="showFairWorks"></app-fairworks>
+
+<!--{{candles.length}}-->
+
+<!--<svg-->
+<!--  xmlns="http://www.w3.org/2000/svg"-->
+<!--  width="195"-->
+<!--  height="4"-->
+<!--  viewBox="0 0 176 3"-->
+<!--  #svg-->
+<!--&gt;-->
+<!--  <g data-name="Group 182628" transform="translate(-8 -441)">-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149783"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(8 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149784"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(28 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149785"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(48 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149786"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(68 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149787"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(88 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149788"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(108 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149789"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(128 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149790"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(148 441)"-->
+<!--    />-->
+<!--    <rect-->
+<!--      data-name="Rectangle 149791"-->
+<!--      width="16"-->
+<!--      height="4"-->
+<!--      rx="1"-->
+<!--      transform="translate(168 441)"-->
+<!--    />-->
+<!--  </g>-->
+<!--</svg>-->
