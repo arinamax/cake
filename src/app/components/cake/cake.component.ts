@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { combineLatest, debounceTime, filter, map, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface Candle {
   x: string,
@@ -26,7 +27,7 @@ export class CakeComponent implements AfterViewInit {
   // @ViewChild('svg') elementRef: ElementRef;
 
   constructor(private renderer: Renderer2,
-
+              private _snackBar: MatSnackBar,
               ) {
   }
 
@@ -43,11 +44,13 @@ export class CakeComponent implements AfterViewInit {
     const checkVolume = (res) => {
       const volume = this.computeVolume(samples());
       if (volume >= 6) {
-        if (this.candles.find(candle => candle.flaming)) {
+        if (this.candles.some(candle => candle.flaming)) {
           this.candles.find(candle => candle.flaming).flaming = false
+          if (this.candles.every(item => !item.flaming)) {
+            this.showFairWorks = true;
+          }
         } else {
           this.stopMic();
-          this.showFairWorks = true;
         }
       }
       if (audioMediaStreamTrack.readyState === 'live') {
@@ -139,9 +142,14 @@ export class CakeComponent implements AfterViewInit {
   }
 
 
-  public mic() {
+  public mic(): void {
     if (this.stream) {
       this.stopMic();
+      return;
+    }
+
+    if (!this.candles.length) {
+      this.openSnackBar();
       return;
     }
 
@@ -152,7 +160,11 @@ export class CakeComponent implements AfterViewInit {
     });
   }
 
-  public stopMic() {
+  private openSnackBar(): void {
+    this._snackBar.open('Put the candles in the cake first!', 'OK');
+  }
+
+  public stopMic(): void {
     this.stream?.getTracks().forEach((item: MediaStreamTrack) => {
       item.stop();
     })
@@ -192,8 +204,9 @@ export class CakeComponent implements AfterViewInit {
   //   }
   // }
 
-  public light() {
-    this.candles.forEach(candle => candle.flaming = true)
+  public light(): void {
+    this.candles.forEach(candle => candle.flaming = true);
+    this.showFairWorks = false;
   }
 
 }
