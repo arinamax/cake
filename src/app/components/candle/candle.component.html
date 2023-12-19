@@ -1,7 +1,0 @@
-<div class="candle" [ngStyle]="{top: coords.y, left: coords.x}"
-     *ngIf="candle"
-     @flyInOut
-     (click)="$event.stopPropagation()">
-  <div class="flame" *ngIf="candle?.flaming" (click)="candle.flaming = !candle.flaming"></div>
-  <div class="wick" *ngIf="!candle?.flaming"></div>
-</div>
